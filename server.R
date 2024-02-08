@@ -1,4 +1,4 @@
-####################################################
+###################################################
 # stanpumpR                                        #
 # Copyright, 2023, Steven L. Shafer, MD            #
 # May be freely distributed, modified, or adapted  #
@@ -24,7 +24,6 @@ server <- function(input, output, session)
         cat("Error detected in stanpumpR\n")
         cat(msg, "\n")
         cat("URL: ", url(), "\n")
-        sendError(url = url(), errorMessage = msg)
       })
     }
     options(error = NULL)
@@ -474,67 +473,6 @@ server <- function(input, output, session)
   plotResultsReactive <- reactive({
     simulationPlotRetval()$plotResults
   })
-
-  # email address --------------------------------------
-  observe({
-    if (input$recipient == "") {
-      hideElement("sendSlideButton")
-      hideElement("sendSlideError")
-      return()
-    }
-
-    regex_email <- "^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w{2,}([-.]\\w+)*$"
-    if (nchar(input$recipient) == attr(regexpr(regex_email, input$recipient, perl=FALSE),"match.length")) {
-      cat("Address is OK\n")
-      hideElement("sendSlideError")
-      showElement("sendSlideButton")
-    } else {
-      hideElement("sendSlideButton")
-      showElement("sendSlideError")
-    }
-  })
-
-  # Send Slide -----------------------------
-  observeEvent(
-    input$sendSlide,
-    {
-      DEBUG <- TRUE
-      disable("sendSlideButton")
-      outputComments(paste("input$sendSlide",input$sendSlide), echo = DEBUG)
-
-      values <- list(
-        title = input$title,
-        DT = doseTableClean(),
-        url = url(),
-        ageUnit = ageUnit(),
-        weightUnit = weightUnit(),
-        heightUnit = heightUnit(),
-        age = age(),
-        weight = weight(),
-        height = height(),
-        sex = sex()
-      )
-      img <- sendSlide(
-        values = values,
-        recipient = input$recipient,
-        plotObject = plotObjectReactive(),
-        allResults = allResultsReactive(),
-        plotResults = plotResultsReactive(),
-        isShinyLocal = isShinyLocal,
-        slide = as.numeric(input$sendSlide),
-        drugs = drugs(),
-        drugDefaults = drugDefaults(),
-        email_username = config$email_username,
-        email_password = config$email_password
-      )
-      output$sentPlot <- renderImage(
-        list(src = img),
-        deleteFile = TRUE
-      )
-      enable("sendSlideButton")
-    }
-  )
-
 
   # Hover control ############################################################
   observeEvent(

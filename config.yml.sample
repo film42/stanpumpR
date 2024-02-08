@@ -1,7 +1,5 @@
 default:
   title: "stanpumpR v1.1"
-  email_username: "<gmail username>"
-  email_password: "<gmail password>"
   maintainer_name: "<maintainer name>"
   maintainer_email: "<maintainer email>"
   help_link: "https://steveshafer.shinyapps.io/stanpumpR_HelpPage"

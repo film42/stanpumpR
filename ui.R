@@ -395,54 +395,7 @@ ui <- function(request) {
                 placement = "bottom",
                 options = list(container = "body")
               )
-            ),
-            column(
-              offset = 0,
-              width = 4,
-              fluidRow(
-                column(
-                  width = 9,
-                  textInput(
-                    inputId = "recipient",
-                    label = "Email slide to:"
-                  ),
-                  bsTooltip(
-                    id = "recipient",
-                    title = "Enter a valid e-mail address",
-                    placement = "top",
-                    options = list(container = "body")
-                  )
-                ),
-                column(
-                  width = 3,
-                  div(
-                    id = "sendSlideButton",
-                    style = "padding-top: 25px;",
-                    actionButton(
-                      inputId = "sendSlide",
-                      label = "GO!",
-                      icon = icon("far fa-envelope")
-                    ),
-                    bsTooltip(
-                      id = "sendSlide",
-                      title = "Click ONCE to send slide",
-                      placement = "top",
-                      options = list(container = "body")
-                    )
-                  ),
-                  div(
-                    id = "sendSlideError",
-                    style = "padding-top: 25px;",
-                    "Check address"
-                  )
-                )
-              ), # End of fluid row
-              imageOutput(
-                outputId = "sentPlot",
-                height = "100px",
-                width = "166px"
-              )
-            ) # end columnn
+            )
           ) # end fluidRow
         ) # End of right hand colunn
       ), # end of first fluid row
